@@ -83,7 +83,7 @@ class Rect {
     this.isMouseDown = false;
     // 不能宽高分别不能小于某一个值，否则视为删除
     if (this.w < MW || this.h < MH) {
-      // this.game.actors.delete(this);
+      this.game.actors.delete(this);
     }
     this.building = false;
   }
