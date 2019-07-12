@@ -4,16 +4,42 @@
 <style>
 canvas {
   border: 1px solid #000;
+  display: block;
+}
+
+#area1 {
+  margin-bottom: 20px;
+}
+
+#area2 {
+  margin-bottom: 20px;
 }
 </style>
 </head>
 <body>
-<div id="container"></div>
+<div id="area1">
+<h3>等比例缩小的图</h3>
+<div id="container1"></div>
+</div>
+
+<div id="area2">
+<h3>原始尺寸</h3>
+<div id="container2"></div>
+</div>
 <script src="./browser.js"></script>
 <script>
-const selectMark = new SelectMark(
-  document.getElementById('container'),
+const selectMark1 = new SelectMark(
+  document.getElementById('container1'),
   300, // 图片宽度限制
+  './assets/demo1.jpg',
+  [
+    [100, 100, 200, 150]
+  ]
+);
+
+const selectMark2 = new SelectMark(
+  document.getElementById('container2'),
+  0, // 图片宽度限制
   './assets/demo1.jpg',
   [
     [100, 100, 200, 150]

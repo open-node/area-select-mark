@@ -287,8 +287,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var MW = 5;
-var MH = 5;
+var MW = 8;
+var MH = 8;
 var CS = 3; // 矩形上8个小圆圈的半径
 // 矩形上的八个小圆圈绘制顺序
 // 判断按下恰好相反，为逆序
@@ -386,7 +386,7 @@ var Rect = function () {
       this.isMouseDown = false;
       // 不能宽高分别不能小于某一个值，否则视为删除
       if (this.w < MW || this.h < MH) {
-        // this.game.actors.delete(this);
+        this.game.actors.delete(this);
       }
       this.building = false;
     }

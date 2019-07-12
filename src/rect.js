@@ -1,5 +1,5 @@
-const MW = 5;
-const MH = 5;
+const MW = 8;
+const MH = 8;
 const CS = 3; // 矩形上8个小圆圈的半径
 // 矩形上的八个小圆圈绘制顺序
 // 判断按下恰好相反，为逆序
