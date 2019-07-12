@@ -42,10 +42,38 @@ var SelectMark = function () {
     this.curr = null; // 当前正在编辑的标记区域角色
   }
 
-  /** 重置 */
+  /** 缩放坐标 */
 
 
   _createClass(SelectMark, [{
+    key: "scale",
+    value: function scale(item) {
+      var _this = this;
+
+      if (this.scaleRate === 1) return item;
+      return item.map(function (x) {
+        return x / _this.scaleRate;
+      });
+    }
+
+    /** 获取标记 */
+
+  }, {
+    key: "getMarks",
+    value: function getMarks() {
+      var rate = this.scaleRate;
+      return Array.from(this.actors).map(function (_ref) {
+        var x = _ref.x,
+            y = _ref.y,
+            w = _ref.w,
+            h = _ref.h;
+        return [x * rate, y * rate, w * rate, h * rate];
+      });
+    }
+
+    /** 重置 */
+
+  }, {
     key: "reset",
     value: function reset() {
       this.actors = new Set();
@@ -59,7 +87,7 @@ var SelectMark = function () {
           for (var _iterator = this.marks[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var x = _step.value;
 
-            this.actors.add(new (Function.prototype.bind.apply(Rect, [null].concat([this], _toConsumableArray(x))))());
+            this.actors.add(new (Function.prototype.bind.apply(Rect, [null].concat([this], _toConsumableArray(this.scale(x)))))());
           }
         } catch (err) {
           _didIteratorError = true;
@@ -83,7 +111,7 @@ var SelectMark = function () {
   }, {
     key: "mousedown",
     value: function mousedown(event) {
-      var _this = this;
+      var _this2 = this;
 
       var clientX = event.clientX,
           clientY = event.clientY;
@@ -123,7 +151,7 @@ var SelectMark = function () {
         this.actors.add(this.curr);
       }
       this.canvas.onmousemove = function (evt) {
-        _this.curr.mousemove(evt);
+        _this2.curr.mousemove(evt);
       };
     }
 
@@ -204,10 +232,17 @@ var SelectMark = function () {
       this.ow = width;
       // 图片原始高度
       this.oh = height;
-      // 图片缩放后的宽度
-      this.w = w;
-      // 图片缩放后的高度
-      this.h = this.w * height / width;
+      if (w) {
+        this.scaleRate = width / w;
+        // 图片缩放后的宽度
+        this.w = w;
+        // 图片缩放后的高度
+        this.h = this.w * height / width;
+      } else {
+        this.scaleRate = 1;
+        this.w = width;
+        this.h = height;
+      }
 
       // 清空角色列表
       this.actors = new Set();

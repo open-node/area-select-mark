@@ -34,6 +34,17 @@ class SelectMark {
     return item.map(x => x / this.scaleRate);
   }
 
+  /** 获取标记 */
+  getMarks() {
+    const rate = this.scaleRate;
+    return Array.from(this.actors).map(({ x, y, w, h }) => [
+      x * rate,
+      y * rate,
+      w * rate,
+      h * rate
+    ]);
+  }
+
   /** 重置 */
   reset() {
     this.actors = new Set();
