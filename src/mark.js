@@ -100,10 +100,15 @@ class SelectMark {
     this.ow = width;
     // 图片原始高度
     this.oh = height;
-    // 图片缩放后的宽度
-    this.w = w;
-    // 图片缩放后的高度
-    this.h = (this.w * height) / width;
+    if (w) {
+      // 图片缩放后的宽度
+      this.w = w;
+      // 图片缩放后的高度
+      this.h = (this.w * height) / width;
+    } else {
+      this.w = width;
+      this.h = height;
+    }
 
     // 清空角色列表
     this.actors = new Set();
