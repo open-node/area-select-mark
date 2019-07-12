@@ -28,13 +28,19 @@ class SelectMark {
     this.curr = null; // 当前正在编辑的标记区域角色
   }
 
+  /** 缩放坐标 */
+  scale(item) {
+    if (this.scaleRate === 1) return item;
+    return item.map(x => x / this.scaleRate);
+  }
+
   /** 重置 */
   reset() {
     this.actors = new Set();
     // 初始标记
     if (Array.isArray(this.marks) && this.marks.length) {
       for (const x of this.marks) {
-        this.actors.add(new Rect(this, ...x));
+        this.actors.add(new Rect(this, ...this.scale(x)));
       }
     }
   }
@@ -101,11 +107,13 @@ class SelectMark {
     // 图片原始高度
     this.oh = height;
     if (w) {
+      this.scaleRate = width / w;
       // 图片缩放后的宽度
       this.w = w;
       // 图片缩放后的高度
       this.h = (this.w * height) / width;
     } else {
+      this.scaleRate = 1;
       this.w = width;
       this.h = height;
     }
