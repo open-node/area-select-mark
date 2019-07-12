@@ -113,8 +113,8 @@ var SelectMark = function () {
     value: function mousedown(event) {
       var _this2 = this;
 
-      var clientX = event.clientX,
-          clientY = event.clientY;
+      var offsetX = event.offsetX,
+          offsetY = event.offsetY;
       // 是否点击在空白区域,
       // 一次来判断是要操作某一个mark还是要新建一个mark
 
@@ -126,7 +126,7 @@ var SelectMark = function () {
         for (var _iterator2 = this.actors[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var actor = _step2.value;
 
-          if (actor.mousedown(clientX, clientY)) {
+          if (actor.mousedown(offsetX, offsetY)) {
             this.curr = actor;
             break;
           }
@@ -147,7 +147,10 @@ var SelectMark = function () {
       }
 
       if (!this.curr) {
-        this.curr = new Rect(this, clientX, clientY);
+        this.curr = new Rect(this, offsetX, offsetY);
+        this.curr.mousedownX = offsetX;
+        this.curr.mousedownY = offsetY;
+        this.curr.isMouseDown = "rb";
         this.actors.add(this.curr);
       }
       this.canvas.onmousemove = function (evt) {
@@ -173,7 +176,6 @@ var SelectMark = function () {
     key: "addListener",
     value: function addListener() {
       this.canvas.onmousedown = this.mousedown;
-
       this.canvas.onmouseup = this.mouseup;
     }
 
@@ -190,7 +192,6 @@ var SelectMark = function () {
       // 显示背景主图
       this.ctx.drawImage(this.img, 0, 0, this.w, this.h);
 
-      // console.log("this.actors.size: %d", this.actors.size);
       // 更新和渲染每一个角色
       var _iteratorNormalCompletion3 = true;
       var _didIteratorError3 = false;
@@ -367,28 +368,21 @@ var Rect = function () {
       this.mousedownX = cX;
       this.mousedownY = cY;
 
-      console.log("MouseDown: StartPos [%d, %d], type: %s", cX, cY, this.isMouseDown);
       return true;
     }
   }, {
     key: "mousemove",
     value: function mousemove(_ref) {
-      var clientX = _ref.clientX,
-          clientY = _ref.clientY;
+      var offsetX = _ref.offsetX,
+          offsetY = _ref.offsetY;
 
       this.mousemoved = true;
-      this.clientX = clientX;
-      this.clientY = clientY;
-
-      console.log("mousemove: [%d, %d]", clientX, clientY);
+      this.offsetX = offsetX;
+      this.offsetY = offsetY;
     }
   }, {
     key: "mouseup",
-    value: function mouseup(_ref2) {
-      var clientX = _ref2.clientX,
-          clientY = _ref2.clientY;
-
-      console.log("mouseup: [%d, %d]", clientX, clientY);
+    value: function mouseup() {
       this.isMouseDown = false;
       // 不能宽高分别不能小于某一个值，否则视为删除
       if (this.w < MW || this.h < MH) {
@@ -402,11 +396,10 @@ var Rect = function () {
       if (!this.isMouseDown || !this.mousemoved) return;
       this.mousemoved = false;
       // 移动状态
-      var dx = this.clientX - this.mousedownX;
-      var dy = this.clientY - this.mousedownY;
-      this.mousedownX = this.clientX;
-      this.mousedownY = this.clientY;
-      console.log("update: %d, %d", dx, dy);
+      var dx = this.offsetX - this.mousedownX;
+      var dy = this.offsetY - this.mousedownY;
+      this.mousedownX = this.offsetX;
+      this.mousedownY = this.offsetY;
       if (this.isMouseDown === "o") {
         this.x += dx;
         this.y += dy;
@@ -468,7 +461,6 @@ var Rect = function () {
       this.h = this.b - this.t;
 
       this.updateCircles();
-      console.log(this);
     }
   }, {
     key: "render",
@@ -492,12 +484,11 @@ var Rect = function () {
 
           ctx.beginPath();
           if (c === this.isMouseDown) {
-            ctx.fillStyle = "#eeeeee";
+            ctx.fillStyle = "#ffff00";
           } else {
             ctx.fillStyle = "#ffffff";
           }
           ctx.arc(x, y, CS, 0, 2 * Math.PI, true);
-          // console.log(x, y, CS, 0, 2 * Math.PI, true);
           ctx.stroke();
           ctx.fill();
           ctx.closePath();

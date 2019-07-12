@@ -70,25 +70,16 @@ class Rect {
     this.mousedownX = cX;
     this.mousedownY = cY;
 
-    console.log(
-      "MouseDown: StartPos [%d, %d], type: %s",
-      cX,
-      cY,
-      this.isMouseDown
-    );
     return true;
   }
 
-  mousemove({ clientX, clientY }) {
+  mousemove({ offsetX, offsetY }) {
     this.mousemoved = true;
-    this.clientX = clientX;
-    this.clientY = clientY;
-
-    console.log("mousemove: [%d, %d]", clientX, clientY);
+    this.offsetX = offsetX;
+    this.offsetY = offsetY;
   }
 
-  mouseup({ clientX, clientY }) {
-    console.log("mouseup: [%d, %d]", clientX, clientY);
+  mouseup() {
     this.isMouseDown = false;
     // 不能宽高分别不能小于某一个值，否则视为删除
     if (this.w < MW || this.h < MH) {
@@ -101,11 +92,10 @@ class Rect {
     if (!this.isMouseDown || !this.mousemoved) return;
     this.mousemoved = false;
     // 移动状态
-    const dx = this.clientX - this.mousedownX;
-    const dy = this.clientY - this.mousedownY;
-    this.mousedownX = this.clientX;
-    this.mousedownY = this.clientY;
-    console.log("update: %d, %d", dx, dy);
+    const dx = this.offsetX - this.mousedownX;
+    const dy = this.offsetY - this.mousedownY;
+    this.mousedownX = this.offsetX;
+    this.mousedownY = this.offsetY;
     if (this.isMouseDown === "o") {
       this.x += dx;
       this.y += dy;
@@ -145,7 +135,6 @@ class Rect {
     this.h = this.b - this.t;
 
     this.updateCircles();
-    console.log(this);
   }
 
   render() {
@@ -157,12 +146,11 @@ class Rect {
       const [x, y] = this.circles[c];
       ctx.beginPath();
       if (c === this.isMouseDown) {
-        ctx.fillStyle = "#eeeeee";
+        ctx.fillStyle = "#ffff00";
       } else {
         ctx.fillStyle = "#ffffff";
       }
       ctx.arc(x, y, CS, 0, 2 * Math.PI, true);
-      // console.log(x, y, CS, 0, 2 * Math.PI, true);
       ctx.stroke();
       ctx.fill();
       ctx.closePath();

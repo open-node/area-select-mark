@@ -58,17 +58,20 @@ class SelectMark {
 
   /** 鼠标按下事件 */
   mousedown(event) {
-    const { clientX, clientY } = event;
+    const { offsetX, offsetY } = event;
     // 是否点击在空白区域,
     // 一次来判断是要操作某一个mark还是要新建一个mark
     for (const actor of this.actors) {
-      if (actor.mousedown(clientX, clientY)) {
+      if (actor.mousedown(offsetX, offsetY)) {
         this.curr = actor;
         break;
       }
     }
     if (!this.curr) {
-      this.curr = new Rect(this, clientX, clientY);
+      this.curr = new Rect(this, offsetX, offsetY);
+      this.curr.mousedownX = offsetX;
+      this.curr.mousedownY = offsetY;
+      this.curr.isMouseDown = "rb";
       this.actors.add(this.curr);
     }
     this.canvas.onmousemove = evt => {
@@ -88,7 +91,6 @@ class SelectMark {
   /** 添加事件监听 */
   addListener() {
     this.canvas.onmousedown = this.mousedown;
-
     this.canvas.onmouseup = this.mouseup;
   }
 
@@ -102,7 +104,6 @@ class SelectMark {
     // 显示背景主图
     this.ctx.drawImage(this.img, 0, 0, this.w, this.h);
 
-    // console.log("this.actors.size: %d", this.actors.size);
     // 更新和渲染每一个角色
     for (const actor of this.actors) {
       actor.update();
