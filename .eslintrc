@@ -1,0 +1,68 @@
+{
+  "extends": "airbnb",
+  "plugins": [
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "jquery": true,
+    "mocha": true
+  },
+  "rules": {
+    "react/require-extension": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-boolean-value": "off",
+    "react/no-array-index-key": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-no-bind": "off",
+    "react/prop-types": "off",
+    "react/no-multi-comp": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "nonblock-statement-body-position": "off",
+    "operator-linebreak": "off",
+    "prefer-destructuring": "off",
+    "indent": "off",
+    "no-use-before-define": "off",
+    "no-param-reassign": "off",
+    "no-continue": "off",
+    "no-console": 0,
+    "no-debugger": 1,
+    "no-var": 1,
+    "semi": [1, "always"],
+    "no-trailing-spaces": 0,
+    "eol-last": 0,
+    "no-underscore-dangle": 0,
+    "no-alert": 0,
+    "no-empty": 0,
+    "no-loop-func": 0,
+    "no-bitwise": 0,
+    "quotes": 0,
+    "comma-dangle": 0,
+    "arrow-parens": 0,
+    "object-curly-newline": 0,
+    "function-paren-newline": 0,
+    "implicit-arrow-linebreak": 0,
+    "curly": 0,
+    "no-mixed-operators": 0,
+    "no-restricted-syntax": 0,
+    "no-lone-blocks": 0,
+    "yoda": 0,
+    "no-plusplus": 0,
+    "no-cond-assign": 0
+  },
+  "globals": {
+  },
+  "settings": {
+  }
+}

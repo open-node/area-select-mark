@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>图片区域选择标记</title>
+</head>
+<body>
+<div id="container"></div>
+<script src="./browser.js"></script>
+<script>
+SelectMark({
+  width: 600,// 图片宽度，可以不设定，不设定显示原图
+  container: document.getElementById('container'),
+  src: './assets/demo1.jpg',
+  success(marks) {
+    console.log(marks);
+  },
+  faild(error) {
+    console.error(error);
+  },
+  marks: [[20, 30, 60, 40]], // 初始标记, 每一项四个值, 左上角x，左上角y，矩形宽度，矩形高度
+});
+</script>
+</body>
+</html>
+

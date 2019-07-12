@@ -1,0 +1,35 @@
+{
+  "name": "area-select-mark",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:browser": "browserify src-es5/mark.js -s SelectMark > browser.js",
+    "build:node": "browserify src-es5/mark.js --node -s SelectMark > index.js",
+    "build": "babel src -d src-es5 && npm run build:browser && npm run build:node"
+  },
+  "browser": {
+    "./index.js": "./browser.js"
+  },
+  "babel": {
+    "presets": ["env"]
+  },
+  "env": {
+    "production": {
+      "plugins": ["babel-polyfill"]
+    }
+  },
+  "author": "Redstone Zhao",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "bip39": "^2.5.0",
+    "blakejs": "^1.1.0",
+    "browserify": "^16.2.2",
+    "crypto-js": "^3.1.9-1",
+    "mocha": "^5.1.1",
+    "nyc": "^11.7.3"
+  }
+}
