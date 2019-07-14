@@ -1,18 +1,26 @@
-# image-slider-push
+# area-select-mark
+
+[Demo](https://open-node.github.io/area-select-mark/)
 
 <pre>
-npm install image-slider-push --save
-<pre>
+npm install area-select-mark --save
+</pre>
 
 ```js
-const Slider = require('image-slider-push');
+// html
+// <div id="container1"></div>
+const = require('area-select-mark');
 
-Slider({
-  width: 400,
-  sleep: 20, // 每次push后暂停多久单位毫秒
-  dy: 2, // 每次向上移动的距离，单位像素
-  max: 3, // 容易内最多容纳的图片数量
-  container: document.getElementById('container'),// 图片展示所在的容器
-  queue: [], // 图片路径队列, 外部不断的push
-});
+const el = document.getElementById('container1');
+
+const selectMark = new SelectMark(
+  el,                       // 事先创建一个容器
+  300,                      // 图片宽度限制, 系统会自动等比缩放图片，标记位置也同样会转换
+  './assets/demo1.jpg',     // 要标记的图片地址
+  [                         // 初始标记
+    [100, 100, 200, 150]    // x, y, 宽, 高 (此标记位置坐标以及宽高是针对原图尺寸的)
+  ]                         // 可以是多项
+);
+
+const marks = selectMark.getMarks(); // 得到当前的标记(系统已做了转换，得到的坐标以及宽高均是针对原图尺寸的)
 ```
